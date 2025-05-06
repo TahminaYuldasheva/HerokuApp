@@ -3,10 +3,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 import java.util.List;
@@ -26,12 +26,14 @@ public class CheckBoxesTest {
     public void checkBoxes() {
         driver.get("https://the-internet.herokuapp.com/checkboxes");
         List<WebElement> checkBoxes = driver.findElements(By.cssSelector("[type=checkbox]"));
-        Assert.assertFalse(checkBoxes.get(0).isSelected());
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertFalse(checkBoxes.get(0).isSelected());
         checkBoxes.get(0).click();
-        Assert.assertTrue(checkBoxes.get(0).isSelected());
-        Assert.assertTrue(checkBoxes.get(1).isSelected());
+        softAssert.assertTrue(checkBoxes.get(0).isSelected());
+        softAssert.assertTrue(checkBoxes.get(1).isSelected());
         checkBoxes.get(1).click();
-        Assert.assertFalse(checkBoxes.get(1).isSelected());
+        softAssert.assertFalse(checkBoxes.get(1).isSelected());
+        softAssert.assertAll();
     }
 
     @AfterMethod(alwaysRun = true)
